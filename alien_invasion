@@ -4,6 +4,7 @@ from ship import Ship
 from alien import Alien
 import game_functions as g_f
 from pygame.sprite import Group
+from gamestats import GameStats
 
 
 def run_game():
@@ -13,6 +14,8 @@ def run_game():
     ai_settings = Settings()
     screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height))
     pygame.display.set_caption('Alien Invasion')
+    #Создание экземпляра для хранения игровой статистики
+    stats = GameStats(ai_settings)
     # создание коробля
     ship = Ship(ai_settings, screen)
     # Создание группы для хранения пуль
@@ -27,10 +30,11 @@ def run_game():
         # Отслеживание событий клавиатуры и мыши.
         g_f.check_events(ai_settings, screen, ship, bullets)
         ship.update()
-        g_f.update_bullets(bullets)
+        g_f.update_bullets(ai_settings, screen, ship, aliens, bullets)
         #print(len(bullets))
-        g_f.update_aliens(ai_settings, aliens)
+        g_f.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
         g_f.update_screen(ai_settings, screen, ship, aliens, bullets)
+        g_f.check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets)
 
 
 
