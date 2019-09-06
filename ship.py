@@ -1,7 +1,10 @@
 import pygame
+from pygame.sprite import Sprite
 
-class Ship():
+class Ship(Sprite):
+
     def __init__(self, ai_settings, screen):
+        super().__init__()
 
         """Инициализирует корабль и задает его начальную позицию"""
         self.screen = screen
@@ -35,3 +38,7 @@ class Ship():
 
         """Рисует корабль в текущей позиции"""
         self.screen.blit(self.image, self.rect)
+
+    def center_ship(self):
+        """Размещает корабль в центре нижней стороны"""
+        self.center = self.screen_rect.centerx
